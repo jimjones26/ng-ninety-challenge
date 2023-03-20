@@ -28,22 +28,15 @@ export class AppComponent {
   ];
 
   createTodo(todo: string) {
-    console.log("TODO", todo);
     const newId = uuid.v4();
     let newTodo = {
       id: newId,
       name: todo,
       isComplete: false,
     }
-    console.log("NEW TODO:", newTodo);
 
     this.todos.push(newTodo);
     this.todo = '';
-  }
-
-  logTodos() {
-    console.log("on checkbox change:", this.todos);
-
   }
 
   deleteTodo(id: string) {

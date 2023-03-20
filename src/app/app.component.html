@@ -10,10 +10,9 @@
   <li *ngFor="let todo of todos">
     <span>{{todo.id}}</span>
     <span [class.complete]="todo.isComplete === true">{{todo.name}}</span>
-    <span><input type="checkbox" [(ngModel)]="todo.isComplete" (change)="logTodos()"/></span>
+    <span><input type="checkbox" [(ngModel)]="todo.isComplete"/></span>
     <button (click)="deleteTodo(todo.id)">Delete</button>
   </li>
 </div>
-
 
 <ng-template #noTodos>There are no todos, all caught up!</ng-template>
