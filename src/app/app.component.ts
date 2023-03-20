@@ -6,5 +6,14 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
-  title = 'ng-ninety-challenge';
+  title = 'Ninety.io Coding Challenge';
+
+  todo: any;
+
+  todos = [];
+
+  createTodo(todo: any) {
+console.log("TODO", todo);
+
+  }
 }
