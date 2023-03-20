@@ -14,7 +14,18 @@ export class AppComponent {
 
   todo: string = '';
 
-  todos: Todo[] = [];
+  todos: Todo[] = [
+    {
+      id: '1',
+      name: "Test Todo",
+      isComplete: false,
+    },
+    {
+      id: '2',
+      name: "Test Todo 2",
+      isComplete: true,
+    }
+  ];
 
   createTodo(todo: string) {
     console.log("TODO", todo);
@@ -28,5 +39,10 @@ export class AppComponent {
 
     this.todos.push(newTodo);
     this.todo = '';
+  }
+
+  logTodos() {
+    console.log("on checkbox change:", this.todos);
+
   }
 }

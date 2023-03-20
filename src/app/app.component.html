@@ -8,8 +8,8 @@
 
 <div *ngIf="todos.length > 0; else noTodos"><li *ngFor="let todo of todos">
   <span>{{todo.id}}</span>
-  <span>{{todo.name}}</span>
-  <span>{{todo.isComplete}}</span>
+  <span [class.complete]="todo.isComplete === true">{{todo.name}}</span>
+  <span><input type="checkbox" [(ngModel)]="todo.isComplete" (change)="logTodos()"/></span>
 </li></div>
 
 
