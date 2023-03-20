@@ -7,4 +7,13 @@ import { Component } from '@angular/core';
 })
 export class AppComponent {
   title = 'Ninety.io Coding Challenge';
+
+  todo: any;
+
+  todos = [];
+
+  createTodo(todo: any) {
+console.log("TODO", todo);
+
+  }
 }

@@ -1,1 +1,14 @@
 <h1>Hello World</h1>
+
+<div>
+  <label for="todo">Add Todo: </label>
+  <input id="todo" [(ngModel)]="todo" placeholder="enter todo">
+  <button (click)="createTodo(todo)">Add Todo</button>
+</div>
+
+<div *ngIf="todos.length > 0; else noTodos"><li *ngFor="let todo of todos">
+  {{todo}}
+</li></div>
+
+
+<ng-template #noTodos>There are no todos, all caught up!</ng-template>
