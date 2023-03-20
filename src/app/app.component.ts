@@ -45,4 +45,10 @@ export class AppComponent {
     console.log("on checkbox change:", this.todos);
 
   }
+
+  deleteTodo(id: string) {
+    let newArray = this.todos.filter((todo: Todo) => todo.id !== id);
+
+    return this.todos = newArray;
+  }
 }
