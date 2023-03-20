@@ -2,13 +2,17 @@
 
 <div>
   <label for="todo">Add Todo: </label>
-  <input id="todo" [(ngModel)]="todo" placeholder="enter todo">
+  <input id="todo" [(ngModel)]="todo" placeholder="enter todo" (keyup.enter)="createTodo(todo)">
   <button (click)="createTodo(todo)">Add Todo</button>
 </div>
 
-<div *ngIf="todos.length > 0; else noTodos"><li *ngFor="let todo of todos">
-  {{todo}}
-</li></div>
-
+<div *ngIf="todos.length > 0; else noTodos">
+  <li *ngFor="let todo of todos">
+    <span>{{todo.id}}</span>
+    <span [class.complete]="todo.isComplete === true">{{todo.name}}</span>
+    <span><input type="checkbox" [(ngModel)]="todo.isComplete"/></span>
+    <button (click)="deleteTodo(todo.id)">Delete</button>
+  </li>
+</div>
 
 <ng-template #noTodos>There are no todos, all caught up!</ng-template>
