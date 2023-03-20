@@ -2,7 +2,7 @@
 
 <div>
   <label for="todo">Add Todo: </label>
-  <input id="todo" [(ngModel)]="todo" placeholder="enter todo">
+  <input id="todo" [(ngModel)]="todo" placeholder="enter todo" (keyup.enter)="createTodo(todo)">
   <button (click)="createTodo(todo)">Add Todo</button>
 </div>
 
