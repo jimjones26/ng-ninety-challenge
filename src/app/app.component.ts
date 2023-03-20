@@ -10,10 +10,11 @@ export class AppComponent {
 
   todo: any;
 
-  todos = [];
+  todos: any = [];
 
   createTodo(todo: any) {
-console.log("TODO", todo);
-
+    console.log("TODO", todo);
+    this.todos.push(todo);
+    this.todo = '';
   }
 }
