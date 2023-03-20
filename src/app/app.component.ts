@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
 
+import { Todo } from "./todo";
+
+import * as uuid from "uuid";
+
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
@@ -8,13 +12,21 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'Ninety.io Coding Challenge';
 
-  todo: any;
+  todo: string = '';
 
-  todos: any = [];
+  todos: Todo[] = [];
 
-  createTodo(todo: any) {
+  createTodo(todo: string) {
     console.log("TODO", todo);
-    this.todos.push(todo);
+    const newId = uuid.v4();
+    let newTodo = {
+      id: newId,
+      name: todo,
+      isComplete: false,
+    }
+    console.log("NEW TODO:", newTodo);
+
+    this.todos.push(newTodo);
     this.todo = '';
   }
 }
