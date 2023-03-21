@@ -18,7 +18,6 @@ export class AppComponent implements OnInit {
   ngOnInit(): void {
     this.todos$ = this.todoStore.select((state) => state.todos);
   }
-  title = 'Ninety.io Coding Challenge';
 
   newTodo = new FormControl('', [Validators.required, Validators.minLength(2)]);
   editTodo = new FormControl('', [Validators.required, Validators.minLength(2)]);
@@ -27,11 +26,7 @@ export class AppComponent implements OnInit {
   isEditMode: boolean = false;
   itemToEdit:string = '';
 
-  todos: Todo[] = [
-
-  ];
-
-  createTodo() {
+  /* createTodo() {
     const newId = uuid.v4();
 
     let todo: any = {
@@ -42,16 +37,30 @@ export class AppComponent implements OnInit {
 
     this.todos.push(todo);
     this.newTodo.reset();
+  } */
+
+  createTodo() {
+    const newId = uuid.v4();
+
+    let newTodo: any = {
+      id: newId,
+      name: this.newTodo.value?.toString(),
+      isComplete: false,
+    }
+
+    this.todoStore.setState((state) => ({
+      todos: [...state.todos, newTodo]
+    }))
   }
 
   deleteTodo(id: string) {
-    let newArray = this.todos.filter((todo: Todo) => todo.id !== id);
+    /* let newArray = this.todos.filter((todo: Todo) => todo.id !== id);
 
-    return this.todos = newArray;
+    return this.todos = newArray; */
   }
 
   updateTodo(id:string) {
-    const newArray = this.todos.map(todo => {
+    /* const newArray = this.todos.map(todo => {
       if (todo.id === id) {
         return {...todo, name: this.editTodo.value}
       }
@@ -60,11 +69,11 @@ export class AppComponent implements OnInit {
     })
 
     this.todos = newArray;
-    return this.isEditMode = !this.isEditMode;
+    return this.isEditMode = !this.isEditMode; */
   }
 
   toggleEditMode(id: string) {
-    this.isEditMode = !this.isEditMode;
+  /*   this.isEditMode = !this.isEditMode;
     this.itemToEdit = id;
 
     if(this.isEditMode) {
@@ -75,6 +84,6 @@ export class AppComponent implements OnInit {
       } else {
         this.editTodo.setValue('')
       }
-    }
+    } */
   }
 }

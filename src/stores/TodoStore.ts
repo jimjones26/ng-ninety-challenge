@@ -48,6 +48,18 @@ export class TodoStore {
     return this._state.asObservable();
   }
 
+  get state(): TodoState {
+    return this._state.getValue();
+  }
+
+  setState<K extends keyof TodoState, E extends Partial<Pick<TodoState, K>>>(
+    fn: (state: TodoState) => E
+  ): TodoState {
+    const state = fn(this.state);
+    this._state.next({ ...this.state, ...state });
+    return this.state;
+  }
+
   select<K>(selector: (state: TodoState) => K): Observable<K> {
     return this.state$.pipe(map(selector), distinctUntilChanged());
   }
