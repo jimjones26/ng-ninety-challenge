@@ -49,11 +49,24 @@ export class TodoService extends Store<TodoState> {
     }));
   }
 
-  deleteTodo(id: string) {
-    let newState: Todo[] = this.state.todos.filter(((state) => id !== state.id));
-    this.setState((state) => ({
-      todos: [...newState]
-    }));
+  updateTodo(id: string, value: string | null) {
+    const currentTodo = this.state.todos.find((todo) => {
+      return todo.id === id;
+    });
+    const updatedTodo: any = {
+      id: id,
+      name: value,
+      isComplete: currentTodo?.isComplete,
+    };
 
+    this.setState(() => ({
+      todos: this.state.todos.map((todo) => (todo.id === id ? updatedTodo : todo))
+    }))
+  }
+
+  deleteTodo(id: string) {
+    this.setState((state) => ({
+      todos: this.state.todos.filter((item) => item.id !== id),
+    }));
   }
 }

@@ -43,30 +43,22 @@ export class AppComponent implements OnInit {
   }
 
   updateTodo(id:string) {
-    /* const newArray = this.todos.map(todo => {
-      if (todo.id === id) {
-        return {...todo, name: this.editTodo.value}
-      }
-
-      return todo;
-    })
-
-    this.todos = newArray;
-    return this.isEditMode = !this.isEditMode; */
+    this.todoService.updateTodo(id, this.editTodo.value)
+    return this.isEditMode = !this.isEditMode;
   }
 
   toggleEditMode(id: string) {
-  /*   this.isEditMode = !this.isEditMode;
+    this.isEditMode = !this.isEditMode;
     this.itemToEdit = id;
 
     if(this.isEditMode) {
-      let todo = this.todos.find(item => item.id === id);
+      let todo = this.todoService.state.todos.find(item => item.id === id);
 
       if(todo !== undefined) {
         this.editTodo.setValue(todo.name)
       } else {
         this.editTodo.setValue('')
       }
-    } */
+    }
   }
 }
