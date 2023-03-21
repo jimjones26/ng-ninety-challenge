@@ -2,8 +2,8 @@
 
 <div>
   <label for="newTodo">Add Todo: </label>
-  <input id="newTodo" type="text" [formControl]="newTodo" placeholder="enter todo text" (keyup.enter)="createTodo()">
-  <button (click)="createTodo()">Add Todo</button>
+  <input id="newTodo" type="text" [formControl]="newTodo" placeholder="enter todo text" (keyup.enter)="createTodo()" required>
+  <button (click)="createTodo()" [disabled]="!newTodo.valid">Add Todo</button>
 </div>
 
 <div *ngIf="todos.length > 0; else noTodos">

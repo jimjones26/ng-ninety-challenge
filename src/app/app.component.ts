@@ -3,7 +3,7 @@ import { Component } from '@angular/core';
 import { Todo } from "./todo";
 
 import * as uuid from "uuid";
-import { FormControl } from '@angular/forms';
+import { FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +14,8 @@ export class AppComponent {
   title = 'Ninety.io Coding Challenge';
 
   // declare a var to hold a new todo
-  newTodo = new FormControl('');
+
+  newTodo = new FormControl('', [Validators.required, Validators.minLength(4)]);
 
   //todo: string = '';
   isEditMode: boolean = false;
