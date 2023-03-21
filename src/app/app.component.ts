@@ -23,22 +23,8 @@ export class AppComponent implements OnInit {
   newTodo = new FormControl('', [Validators.required, Validators.minLength(2)]);
   editTodo = new FormControl('', [Validators.required, Validators.minLength(2)]);
 
-  //todo: string = '';
   isEditMode: boolean = false;
   itemToEdit:string = '';
-
-  /* createTodo() {
-    const newId = uuid.v4();
-
-    let todo: any = {
-      id: newId,
-      name: this.newTodo.value?.toString(),
-      isComplete: false,
-    }
-
-    this.todos.push(todo);
-    this.newTodo.reset();
-  } */
 
   createTodo() {
     const newId = uuid.v4();
