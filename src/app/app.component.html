@@ -16,7 +16,7 @@
       <input type="checkbox" [(ngModel)]="todo.isComplete"/>
     </span>
 
-    <button *ngIf="isEditMode && todo.id === itemToEdit" (click)="updateTodo(todo.id)">Save</button>
+    <button *ngIf="isEditMode && todo.id === itemToEdit" (click)="updateTodo(todo.id)" [disabled]="!editTodo.valid">Save</button>
 
     <button (click)="toggleEditMode(todo.id)" [disabled]="isEditMode && todo.id !== itemToEdit">
       <span *ngIf="!isEditMode || itemToEdit !== todo.id else cancel">Edit</span>
