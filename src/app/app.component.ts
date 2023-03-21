@@ -1,16 +1,23 @@
-import { Component } from '@angular/core';
-
-import { Todo } from "./todo";
+import { Component, OnInit } from '@angular/core';
+import { FormControl, Validators } from '@angular/forms';
+import { Todo, TodoStore } from 'src/stores/TodoStore';
+import { Observable } from 'rxjs';
 
 import * as uuid from "uuid";
-import { FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.css']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
+  todos$: Observable<Todo[]> | undefined;
+
+  constructor(private todoStore: TodoStore) {}
+
+  ngOnInit(): void {
+    this.todos$ = this.todoStore.select((state) => state.todos);
+  }
   title = 'Ninety.io Coding Challenge';
 
   newTodo = new FormControl('', [Validators.required, Validators.minLength(2)]);
@@ -21,16 +28,7 @@ export class AppComponent {
   itemToEdit:string = '';
 
   todos: Todo[] = [
-    {
-      id: '1',
-      name: "Test Todo",
-      isComplete: false,
-    },
-    {
-      id: '2',
-      name: "Test Todo 2",
-      isComplete: true,
-    }
+
   ];
 
   createTodo() {
