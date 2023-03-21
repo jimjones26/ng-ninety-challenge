@@ -13,6 +13,8 @@ export class AppComponent {
   title = 'Ninety.io Coding Challenge';
 
   todo: string = '';
+  isEditMode: boolean = false;
+  itemToEdit:string = '';
 
   todos: Todo[] = [
     {
@@ -43,5 +45,10 @@ export class AppComponent {
     let newArray = this.todos.filter((todo: Todo) => todo.id !== id);
 
     return this.todos = newArray;
+  }
+
+  toggleEditMode(id:string) {
+    this.isEditMode = !this.isEditMode;
+    this.itemToEdit = id;
   }
 }
