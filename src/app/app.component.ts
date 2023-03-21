@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { Todo, TodoStore } from 'src/stores/TodoStore';
 import { Observable } from 'rxjs';
-
 import * as uuid from "uuid";
+
+import { TodoService, Todo } from 'src/services/Task.service';
+
 
 @Component({
   selector: 'app-root',
@@ -13,10 +14,10 @@ import * as uuid from "uuid";
 export class AppComponent implements OnInit {
   todos$: Observable<Todo[]> | undefined;
 
-  constructor(private todoStore: TodoStore) {}
+  constructor(private todoService: TodoService) {}
 
   ngOnInit(): void {
-    this.todos$ = this.todoStore.select((state) => state.todos);
+    this.todos$ = this.todoService.select((state) => state.todos);
   }
 
   newTodo = new FormControl('', [Validators.required, Validators.minLength(2)]);
@@ -48,9 +49,7 @@ export class AppComponent implements OnInit {
       isComplete: false,
     }
 
-    this.todoStore.setState((state) => ({
-      todos: [...state.todos, newTodo]
-    }))
+    this.todoService.addTodo(newTodo);
   }
 
   deleteTodo(id: string) {
