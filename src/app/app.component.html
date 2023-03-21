@@ -8,7 +8,7 @@
 
 <div *ngIf="todos.length > 0; else noTodos">
   <li *ngFor="let todo of todos">
-    <span>{{todo.id}}</span>
+    <span [class.complete]="todo.isComplete === true">{{todo.id}}</span>
 
     <span *ngIf="!isEditMode || itemToEdit !== todo.id else editMode" [class.complete]="todo.isComplete === true">{{todo.name}}</span>
 
