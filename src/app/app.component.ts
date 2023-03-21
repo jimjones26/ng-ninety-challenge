@@ -15,7 +15,7 @@ export class AppComponent {
 
   // declare a var to hold a new todo
 
-  newTodo = new FormControl('', [Validators.required, Validators.minLength(4)]);
+  newTodo = new FormControl('', [Validators.required, Validators.minLength(2)]);
 
   //todo: string = '';
   isEditMode: boolean = false;
