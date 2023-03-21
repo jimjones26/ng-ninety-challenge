@@ -3,6 +3,7 @@ import { Component } from '@angular/core';
 import { Todo } from "./todo";
 
 import * as uuid from "uuid";
+import { FormControl } from '@angular/forms';
 
 @Component({
   selector: 'app-root',
@@ -12,7 +13,10 @@ import * as uuid from "uuid";
 export class AppComponent {
   title = 'Ninety.io Coding Challenge';
 
-  todo: string = '';
+  // declare a var to hold a new todo
+  newTodo = new FormControl('');
+
+  //todo: string = '';
   isEditMode: boolean = false;
   itemToEdit:string = '';
 
@@ -29,16 +33,17 @@ export class AppComponent {
     }
   ];
 
-  createTodo(todo: string) {
+  createTodo() {
     const newId = uuid.v4();
-    let newTodo = {
+
+    let todo = {
       id: newId,
-      name: todo,
+      name: this.newTodo.value?.toString(),
       isComplete: false,
     }
 
-    this.todos.push(newTodo);
-    this.todo = '';
+    this.todos.push(todo);
+    this.newTodo.reset();
   }
 
   deleteTodo(id: string) {
