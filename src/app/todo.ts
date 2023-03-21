@@ -1,5 +1,5 @@
 export interface Todo {
   id: string;
-  name: string | undefined;
+  name: string | null;
   isComplete: boolean;
 }

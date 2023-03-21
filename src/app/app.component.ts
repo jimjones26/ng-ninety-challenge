@@ -13,9 +13,8 @@ import { FormControl, Validators } from '@angular/forms';
 export class AppComponent {
   title = 'Ninety.io Coding Challenge';
 
-  // declare a var to hold a new todo
-
   newTodo = new FormControl('', [Validators.required, Validators.minLength(2)]);
+  editTodo = new FormControl('', [Validators.required, Validators.minLength(2)]);
 
   //todo: string = '';
   isEditMode: boolean = false;
@@ -37,7 +36,7 @@ export class AppComponent {
   createTodo() {
     const newId = uuid.v4();
 
-    let todo = {
+    let todo: any = {
       id: newId,
       name: this.newTodo.value?.toString(),
       isComplete: false,
@@ -53,8 +52,31 @@ export class AppComponent {
     return this.todos = newArray;
   }
 
-  toggleEditMode(id:string) {
+  updateTodo(id:string) {
+    const newArray = this.todos.map(todo => {
+      if (todo.id === id) {
+        return {...todo, name: this.editTodo.value}
+      }
+
+      return todo;
+    })
+
+    this.todos = newArray;
+    return this.isEditMode = !this.isEditMode;
+  }
+
+  toggleEditMode(id: string) {
     this.isEditMode = !this.isEditMode;
     this.itemToEdit = id;
+
+    if(this.isEditMode) {
+      let todo = this.todos.find(item => item.id === id);
+
+      if(todo !== undefined) {
+        this.editTodo.setValue(todo.name)
+      } else {
+        this.editTodo.setValue('')
+      }
+    }
   }
 }

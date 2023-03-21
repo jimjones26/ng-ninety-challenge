@@ -9,13 +9,25 @@
 <div *ngIf="todos.length > 0; else noTodos">
   <li *ngFor="let todo of todos">
     <span>{{todo.id}}</span>
-    <span *ngIf="!isEditMode || itemToEdit !== todo.id else editTodo" [class.complete]="todo.isComplete === true">{{todo.name}}</span>
-    <span><input type="checkbox" [(ngModel)]="todo.isComplete"/></span>
-    <button (click)="toggleEditMode(todo.id)"><span *ngIf="!isEditMode || itemToEdit !== todo.id else cancel">Edit</span></button>
-    <button (click)="deleteTodo(todo.id)">Delete</button>
+
+    <span *ngIf="!isEditMode || itemToEdit !== todo.id else editMode" [class.complete]="todo.isComplete === true">{{todo.name}}</span>
+
+    <span>
+      <input type="checkbox" [(ngModel)]="todo.isComplete"/>
+    </span>
+
+    <button *ngIf="isEditMode && todo.id === itemToEdit" (click)="updateTodo(todo.id)">Save</button>
+
+    <button (click)="toggleEditMode(todo.id)" [disabled]="isEditMode && todo.id !== itemToEdit">
+      <span *ngIf="!isEditMode || itemToEdit !== todo.id else cancel">Edit</span>
+    </button>
+
+    <button (click)="deleteTodo(todo.id)" [disabled]="isEditMode">Delete</button>
   </li>
 </div>
 
 <ng-template #noTodos>There are no todos, all caught up!</ng-template>
-<ng-template #editTodo>Edit the Todo</ng-template>
 <ng-template #cancel>Cancel</ng-template>
+<ng-template #editMode let-todo>
+  <input id="editTodo" [formControl]="editTodo" [class.complete]="todo.isComplete === true" [class.edit]="isEditMode && todo.id === itemToEdit">
+</ng-template>
