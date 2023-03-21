@@ -36,6 +36,7 @@ export class AppComponent implements OnInit {
     }
 
     this.todoService.addTodo(newTodo);
+    this.newTodo.reset();
   }
 
   deleteTodo(id: string) {
