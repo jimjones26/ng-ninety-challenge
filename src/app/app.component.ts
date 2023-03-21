@@ -53,9 +53,7 @@ export class AppComponent implements OnInit {
   }
 
   deleteTodo(id: string) {
-    /* let newArray = this.todos.filter((todo: Todo) => todo.id !== id);
-
-    return this.todos = newArray; */
+    this.todoService.deleteTodo(id);
   }
 
   updateTodo(id:string) {

@@ -1,5 +1,4 @@
 import { Injectable } from '@angular/core';
-import { Observable, BehaviorSubject, map, distinctUntilChanged } from 'rxjs';
 
 import { Store } from '../stores/Store';
 
@@ -48,5 +47,13 @@ export class TodoService extends Store<TodoState> {
     this.setState((state) => ({
       todos: [...state.todos, todo],
     }));
+  }
+
+  deleteTodo(id: string) {
+    let newState: Todo[] = this.state.todos.filter(((state) => id !== state.id));
+    this.setState((state) => ({
+      todos: [...newState]
+    }));
+
   }
 }
