@@ -1,33 +1,34 @@
-<h1>Hello World</h1>
-
-<div>
-  <label for="newTodo">Add Todo: </label>
-  <input id="newTodo" type="text" [formControl]="newTodo" placeholder="enter todo text" (keyup.enter)="createTodo()" required>
-  <button (click)="createTodo()" [disabled]="!newTodo.valid">Add Todo</button>
-</div>
-
-<div *ngIf="todos.length > 0; else noTodos">
-  <li *ngFor="let todo of todos">
-    <span [class.complete]="todo.isComplete === true">{{todo.id}}</span>
-
-    <span *ngIf="!isEditMode || itemToEdit !== todo.id else editMode" [class.complete]="todo.isComplete === true">{{todo.name}}</span>
-
-    <span>
-      <input type="checkbox" [(ngModel)]="todo.isComplete"/>
-    </span>
-
-    <button *ngIf="isEditMode && todo.id === itemToEdit" (click)="updateTodo(todo.id)" [disabled]="!editTodo.valid">Save</button>
-
-    <button (click)="toggleEditMode(todo.id)" [disabled]="isEditMode && todo.id !== itemToEdit">
-      <span *ngIf="!isEditMode || itemToEdit !== todo.id else cancel">Edit</span>
-    </button>
-
-    <button (click)="deleteTodo(todo.id)" [disabled]="isEditMode">Delete</button>
-  </li>
+<div class="container-div">
+  <h2>Todos</h2>
+  <mat-card>
+    <mat-form-field>
+      <input matInput [formControl]="newTodo" placeholder="enter todo text" (keyup.enter)="createTodo()" required>
+    </mat-form-field>
+    <button mat-button (click)="createTodo()" [disabled]="!newTodo.valid" style="margin: -14px 8px 8px 8px;
+    ">Add Todo</button>
+  </mat-card>
+  <mat-card>
+    <!-- TODO: add todo count to todo service to toggle #noTodos UI-->
+    <mat-list>
+      <mat-list-item *ngFor="let todo of (todos$ | async)">
+        <div class="mat-item-container">
+          <mat-checkbox [(ngModel)]="todo.isComplete"></mat-checkbox>
+          <h3 class="todo-name" *ngIf="!isEditMode || itemToEdit !== todo.id else editMode" [class.complete]="todo.isComplete === true">{{todo.name}}</h3>
+          <button mat-button *ngIf="isEditMode && todo.id === itemToEdit" (click)="updateTodo(todo.id)" [disabled]="!editTodo.valid">Save</button>
+          <button mat-button (click)="toggleEditMode(todo.id)" [disabled]="isEditMode && todo.id !== itemToEdit">
+            <span *ngIf="!isEditMode || itemToEdit !== todo.id else cancel">Edit</span>
+          </button>
+          <button mat-button (click)="deleteTodo(todo.id)" [disabled]="isEditMode">Delete</button>
+        </div>
+      </mat-list-item>
+    </mat-list>
+  </mat-card>
 </div>
 
 <ng-template #noTodos>There are no todos, all caught up!</ng-template>
 <ng-template #cancel>Cancel</ng-template>
 <ng-template #editMode let-todo>
-  <input id="editTodo" [formControl]="editTodo" [class.complete]="todo.isComplete === true" [class.edit]="isEditMode && todo.id === itemToEdit">
+  <mat-form-field class="todo-name">
+    <input matInput id="editTodo" [formControl]="editTodo" [class.complete]="todo.isComplete === true" [class.edit]="isEditMode && todo.id === itemToEdit">
+  </mat-form-field>
 </ng-template>

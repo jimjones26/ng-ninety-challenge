@@ -9,3 +9,32 @@ input:read-only {
 .edit {
   text-decoration: none;
 }
+
+/* .mat-mdc-list-base {
+  --mdc-list-list-item-one-line-container-height: auto;
+} */
+
+.mat-item-container {
+  display: flex;
+  align-items: baseline;
+  column-gap: 8px;
+}
+
+.todo-name {
+  flex-grow: 1;
+}
+
+.mat-mdc-card {
+  min-width: 625px;
+  max-width: 625px;
+  row-gap: 0px;
+}
+
+.container-div {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  padding: 48px;
+}
