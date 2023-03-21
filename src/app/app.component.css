@@ -1,3 +1,11 @@
 .complete {
   text-decoration: line-through;
 }
+
+input:read-only {
+  border: 0;
+}
+
+.edit {
+  text-decoration: none;
+}
