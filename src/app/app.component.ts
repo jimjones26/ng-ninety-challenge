@@ -3,7 +3,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import * as uuid from "uuid";
 
-import { TodoService, Todo } from 'src/services/Task.service';
+import { TodoService, Todo } from '../services/todo.service';
 
 
 @Component({
@@ -17,6 +17,7 @@ export class AppComponent implements OnInit {
   constructor(private todoService: TodoService) {}
 
   ngOnInit(): void {
+    this.todoService.getTodos();
     this.todos$ = this.todoService.select((state) => state.todos);
   }
 

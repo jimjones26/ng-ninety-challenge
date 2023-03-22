@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
 import { Store } from '../stores/Store';
@@ -13,34 +14,24 @@ export interface TodoState {
 }
 
 export const initialState: TodoState = {
-  todos: [
-    {
-      id: '1',
-      name: " Buy the milk",
-      isComplete: false,
-    },
-    {
-      id: '2',
-      name: "Buy the bread",
-      isComplete: false,
-    },
-    {
-      id: '3',
-      name: "Buy the lunchmeat",
-      isComplete: false,
-    },
-    {
-      id: '4',
-      name: "Make lunch",
-      isComplete: false,
-    }
-  ]
+  todos: []
 }
 
 @Injectable({ providedIn: 'root' })
 export class TodoService extends Store<TodoState> {
-  constructor() {
+  apiURL: string = 'http://localhost:3000/todo';
+
+  constructor(private httpClient: HttpClient) {
     super(initialState);
+  }
+
+  getTodos() {
+    this.httpClient.get<Todo[]>(`${this.apiURL}/todos`).subscribe((result: any) => {
+      console.log("RESULT: ", result);
+      this.setState(() => ({
+        todos: result
+      }))
+    });
   }
 
   addTodo(todo: Todo) {
