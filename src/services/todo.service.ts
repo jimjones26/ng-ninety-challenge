@@ -10,11 +10,13 @@ export interface Todo {
 }
 
 export interface TodoState {
-  todos: Todo[]
+  todos: Todo[],
+  isEditMode: boolean,
 }
 
 export const initialState: TodoState = {
-  todos: []
+  todos: [],
+  isEditMode: false,
 }
 
 @Injectable({ providedIn: 'root' })
@@ -96,5 +98,12 @@ export class TodoService extends Store<TodoState> {
         console.log('ERROR: ', error);
       }
     })
+  }
+
+  toggleEditMode() {
+    this.setState(() => ({
+      isEditMode: !this.state.isEditMode
+
+    }))
   }
 }

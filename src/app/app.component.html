@@ -13,12 +13,19 @@
       <mat-list-item *ngFor="let todo of (todos$ | async)">
         <div class="mat-item-container">
           <mat-checkbox [(ngModel)]="todo.isComplete"></mat-checkbox>
-          <h3 class="todo-name" *ngIf="!isEditMode || itemToEdit !== todo._id else editMode" [class.complete]="todo.isComplete === true">{{todo.name}}</h3>
-          <button mat-button *ngIf="isEditMode && todo._id === itemToEdit" (click)="updateTodo(todo._id)" [disabled]="!editTodo.valid">Save</button>
-          <button mat-button (click)="toggleEditMode(todo._id)" [disabled]="isEditMode && todo._id !== itemToEdit">
-            <span *ngIf="!isEditMode || itemToEdit !== todo._id else cancel">Edit</span>
+
+
+          <h3 class="todo-name" *ngIf="!(isEditMode$ | async) || itemToEdit !== todo._id else editMode" [class.complete]="todo.isComplete === true">{{todo.name}}</h3>
+
+
+          <button mat-button *ngIf="(isEditMode$ | async) && todo._id === itemToEdit" (click)="updateTodo(todo._id)" [disabled]="!editTodo.valid">Save</button>
+
+          <button mat-button (click)="toggleEditMode(todo._id)" [disabled]="(isEditMode$ | async) && todo._id !== itemToEdit">
+
+            <span *ngIf="!(isEditMode$ | async) || itemToEdit !== todo._id else cancel">Edit</span>
+
           </button>
-          <button mat-button (click)="deleteTodo(todo._id)" [disabled]="isEditMode">Delete</button>
+          <button mat-button (click)="deleteTodo(todo._id)" [disabled]="(isEditMode$ | async)">Delete</button>
         </div>
       </mat-list-item>
     </mat-list>
@@ -29,6 +36,6 @@
 <ng-template #cancel>Cancel</ng-template>
 <ng-template #editMode let-todo>
   <mat-form-field class="todo-name">
-    <input matInput id="editTodo" [formControl]="editTodo" [class.complete]="todo.isComplete === true" [class.edit]="isEditMode && todo.id === itemToEdit">
+    <input matInput id="editTodo" [formControl]="editTodo" [class.complete]="todo.isComplete === true" [class.edit]="(isEditMode$ | async) && todo.id === itemToEdit">
   </mat-form-field>
 </ng-template>

@@ -13,12 +13,14 @@ import { TodoService, Todo } from '../services/todo.service';
 })
 export class AppComponent implements OnInit {
   todos$: Observable<Todo[]> | undefined;
+  isEditMode$: Observable<Boolean> | undefined;
 
   constructor(private todoService: TodoService) {}
 
   ngOnInit(): void {
     this.todoService.getTodos();
     this.todos$ = this.todoService.select((state) => state.todos);
+    this.isEditMode$ = this.todoService.select((state) => state.isEditMode);
   }
 
   newTodo = new FormControl('', [Validators.required, Validators.minLength(2)]);
@@ -43,14 +45,18 @@ export class AppComponent implements OnInit {
 
   updateTodo(id:string) {
     this.todoService.updateTodo(id, this.editTodo.value)
-    return this.isEditMode = !this.isEditMode;
+    this.todoService.toggleEditMode();
+    //return this.isEditMode = !this.isEditMode;
   }
 
   toggleEditMode(id: string) {
-    this.isEditMode = !this.isEditMode;
+    this.todoService.toggleEditMode();
+    console.log("TOGGLE: ", this.isEditMode$);
+
+    //this.isEditMode = !this.isEditMode;
     this.itemToEdit = id;
 
-    if(this.isEditMode) {
+    if(this.isEditMode$) {
       let todo = this.todoService.state.todos.find(item => item._id === id);
 
       if(todo !== undefined) {
