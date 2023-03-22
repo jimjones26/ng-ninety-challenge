@@ -28,10 +28,7 @@ export class AppComponent implements OnInit {
   itemToEdit:string = '';
 
   createTodo() {
-    const newId = uuid.v4();
-
     let newTodo: any = {
-      id: newId,
       name: this.newTodo.value?.toString(),
       isComplete: false,
     }

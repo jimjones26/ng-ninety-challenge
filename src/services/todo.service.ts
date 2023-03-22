@@ -35,9 +35,28 @@ export class TodoService extends Store<TodoState> {
   }
 
   addTodo(todo: Todo) {
-    this.setState((state) => ({
-      todos: [...state.todos, todo],
-    }));
+    // the todo being passed into the function
+    console.log("addTodo: ", todo);
+
+    this.httpClient.post(`${this.apiURL}/todo`, todo).subscribe({
+      next: (data:any) => {
+        // the shape of the object being returned on success
+        console.log("shape of returned object: ", data.todo);
+
+        let newTodo: Todo = {
+          id: data.todo._id,
+          name: data.todo.name,
+          isComplete: data.todo.isComplete
+        }
+
+        this.setState((state) => ({
+          todos: [...state.todos, newTodo],
+        }));
+      },
+      error: error => {
+        console.log("THERE WAS AN ERROR: ", error)
+      }
+    })
   }
 
   updateTodo(id: string, value: string | null) {
