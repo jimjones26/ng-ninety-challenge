@@ -8,8 +8,9 @@ import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
-import  {MatCheckboxModule } from '@angular/material/checkbox';
-import {MatCardModule} from '@angular/material/card';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatCardModule } from '@angular/material/card';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,8 @@ import {MatCardModule} from '@angular/material/card';
     MatListModule,
     MatIconModule,
     MatCheckboxModule,
-    MatCardModule
+    MatCardModule,
+    HttpClientModule
     ,
   ],
   providers: [],

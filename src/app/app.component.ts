@@ -3,7 +3,7 @@ import { FormControl, Validators } from '@angular/forms';
 import { Observable } from 'rxjs';
 import * as uuid from "uuid";
 
-import { TodoService, Todo } from 'src/services/Task.service';
+import { TodoService, Todo } from '../services/todo.service';
 
 
 @Component({
@@ -13,11 +13,14 @@ import { TodoService, Todo } from 'src/services/Task.service';
 })
 export class AppComponent implements OnInit {
   todos$: Observable<Todo[]> | undefined;
+  isEditMode$: Observable<Boolean> | undefined;
 
   constructor(private todoService: TodoService) {}
 
   ngOnInit(): void {
+    this.todoService.getTodos();
     this.todos$ = this.todoService.select((state) => state.todos);
+    this.isEditMode$ = this.todoService.select((state) => state.isEditMode);
   }
 
   newTodo = new FormControl('', [Validators.required, Validators.minLength(2)]);
@@ -27,10 +30,7 @@ export class AppComponent implements OnInit {
   itemToEdit:string = '';
 
   createTodo() {
-    const newId = uuid.v4();
-
     let newTodo: any = {
-      id: newId,
       name: this.newTodo.value?.toString(),
       isComplete: false,
     }
@@ -45,15 +45,19 @@ export class AppComponent implements OnInit {
 
   updateTodo(id:string) {
     this.todoService.updateTodo(id, this.editTodo.value)
-    return this.isEditMode = !this.isEditMode;
+    this.todoService.toggleEditMode();
+    //return this.isEditMode = !this.isEditMode;
   }
 
   toggleEditMode(id: string) {
-    this.isEditMode = !this.isEditMode;
+    this.todoService.toggleEditMode();
+    console.log("TOGGLE: ", this.isEditMode$);
+
+    //this.isEditMode = !this.isEditMode;
     this.itemToEdit = id;
 
-    if(this.isEditMode) {
-      let todo = this.todoService.state.todos.find(item => item.id === id);
+    if(this.isEditMode$) {
+      let todo = this.todoService.state.todos.find(item => item._id === id);
 
       if(todo !== undefined) {
         this.editTodo.setValue(todo.name)
