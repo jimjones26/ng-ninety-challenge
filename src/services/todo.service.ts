@@ -64,14 +64,22 @@ export class TodoService extends Store<TodoState> {
       return todo._id === id;
     });
     const updatedTodo: any = {
-      id: id,
+      _id: id,
       name: value,
       isComplete: currentTodo?.isComplete,
     };
-
-    this.setState(() => ({
-      todos: this.state.todos.map((todo) => (todo._id === id ? updatedTodo : todo))
-    }))
+    // send a todo object with the updated value to api
+    this.httpClient.put(`${this.apiURL}/edit?todoID=${id}`, updatedTodo).subscribe({
+      next: (data:any) => {
+        console.log('from updateTodo: ', data);
+        this.setState(() => ({
+          todos: this.state.todos.map((todo) => (todo._id === data.todo._id ? data.todo : todo))
+        }))
+      },
+      error: error => {
+        console.log('ERROR: ', error);
+      }
+    })
   }
 
   deleteTodo(id: string) {
