@@ -13,12 +13,12 @@
       <mat-list-item *ngFor="let todo of (todos$ | async)">
         <div class="mat-item-container">
           <mat-checkbox [(ngModel)]="todo.isComplete"></mat-checkbox>
-          <h3 class="todo-name" *ngIf="!isEditMode || itemToEdit !== todo.id else editMode" [class.complete]="todo.isComplete === true">{{todo.name}}</h3>
-          <button mat-button *ngIf="isEditMode && todo.id === itemToEdit" (click)="updateTodo(todo.id)" [disabled]="!editTodo.valid">Save</button>
-          <button mat-button (click)="toggleEditMode(todo.id)" [disabled]="isEditMode && todo.id !== itemToEdit">
-            <span *ngIf="!isEditMode || itemToEdit !== todo.id else cancel">Edit</span>
+          <h3 class="todo-name" *ngIf="!isEditMode || itemToEdit !== todo._id else editMode" [class.complete]="todo.isComplete === true">{{todo.name}}</h3>
+          <button mat-button *ngIf="isEditMode && todo._id === itemToEdit" (click)="updateTodo(todo._id)" [disabled]="!editTodo.valid">Save</button>
+          <button mat-button (click)="toggleEditMode(todo._id)" [disabled]="isEditMode && todo._id !== itemToEdit">
+            <span *ngIf="!isEditMode || itemToEdit !== todo._id else cancel">Edit</span>
           </button>
-          <button mat-button (click)="deleteTodo(todo.id)" [disabled]="isEditMode">Delete</button>
+          <button mat-button (click)="deleteTodo(todo._id)" [disabled]="isEditMode">Delete</button>
         </div>
       </mat-list-item>
     </mat-list>

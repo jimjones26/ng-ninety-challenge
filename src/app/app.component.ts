@@ -51,7 +51,7 @@ export class AppComponent implements OnInit {
     this.itemToEdit = id;
 
     if(this.isEditMode) {
-      let todo = this.todoService.state.todos.find(item => item.id === id);
+      let todo = this.todoService.state.todos.find(item => item._id === id);
 
       if(todo !== undefined) {
         this.editTodo.setValue(todo.name)

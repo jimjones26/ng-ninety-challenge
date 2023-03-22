@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 import { Store } from '../stores/Store';
 
 export interface Todo {
-  id: string;
+  _id: string;
   name: string | null;
   isComplete: boolean;
 }
@@ -44,7 +44,7 @@ export class TodoService extends Store<TodoState> {
         console.log("shape of returned object: ", data.todo);
 
         let newTodo: Todo = {
-          id: data.todo._id,
+          _id: data.todo._id,
           name: data.todo.name,
           isComplete: data.todo.isComplete
         }
@@ -61,7 +61,7 @@ export class TodoService extends Store<TodoState> {
 
   updateTodo(id: string, value: string | null) {
     const currentTodo = this.state.todos.find((todo) => {
-      return todo.id === id;
+      return todo._id === id;
     });
     const updatedTodo: any = {
       id: id,
@@ -70,13 +70,23 @@ export class TodoService extends Store<TodoState> {
     };
 
     this.setState(() => ({
-      todos: this.state.todos.map((todo) => (todo.id === id ? updatedTodo : todo))
+      todos: this.state.todos.map((todo) => (todo._id === id ? updatedTodo : todo))
     }))
   }
 
   deleteTodo(id: string) {
-    this.setState((state) => ({
-      todos: this.state.todos.filter((item) => item.id !== id),
-    }));
+    this.httpClient.delete(`${this.apiURL}/delete?todoID=${id}`).subscribe({
+      next: (data: any) => {
+        // data returned on success
+        console.log("deleteTodo: ", data);
+
+        this.setState((state) => ({
+          todos: this.state.todos.filter((item) => item._id !== data.todo._id),
+        }));
+      },
+      error: error => {
+        console.log('ERROR: ', error);
+      }
+    })
   }
 }
