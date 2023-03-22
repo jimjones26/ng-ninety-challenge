@@ -29,7 +29,6 @@ export class TodoService extends Store<TodoState> {
 
   getTodos() {
     this.httpClient.get<Todo[]>(`${this.apiURL}/todos`).subscribe((result: any) => {
-      console.log("RESULT: ", result);
       this.setState(() => ({
         todos: result
       }))
@@ -37,20 +36,13 @@ export class TodoService extends Store<TodoState> {
   }
 
   addTodo(todo: Todo) {
-    // the todo being passed into the function
-    console.log("addTodo: ", todo);
-
     this.httpClient.post(`${this.apiURL}/todo`, todo).subscribe({
       next: (data:any) => {
-        // the shape of the object being returned on success
-        console.log("shape of returned object: ", data.todo);
-
         let newTodo: Todo = {
           _id: data.todo._id,
           name: data.todo.name,
           isComplete: data.todo.isComplete
         }
-
         this.setState((state) => ({
           todos: [...state.todos, newTodo],
         }));
@@ -70,10 +62,8 @@ export class TodoService extends Store<TodoState> {
       name: value,
       isComplete: currentTodo?.isComplete,
     };
-    // send a todo object with the updated value to api
     this.httpClient.put(`${this.apiURL}/edit?todoID=${id}`, updatedTodo).subscribe({
       next: (data:any) => {
-        console.log('from updateTodo: ', data);
         this.setState(() => ({
           todos: this.state.todos.map((todo) => (todo._id === data.todo._id ? data.todo : todo))
         }))
@@ -87,9 +77,6 @@ export class TodoService extends Store<TodoState> {
   deleteTodo(id: string) {
     this.httpClient.delete(`${this.apiURL}/delete?todoID=${id}`).subscribe({
       next: (data: any) => {
-        // data returned on success
-        console.log("deleteTodo: ", data);
-
         this.setState((state) => ({
           todos: this.state.todos.filter((item) => item._id !== data.todo._id),
         }));
@@ -105,5 +92,26 @@ export class TodoService extends Store<TodoState> {
       isEditMode: !this.state.isEditMode
 
     }))
+  }
+
+  toggleComplete(id: string) {
+    const currentTodo = this.state.todos.find((todo) => {
+      return todo._id === id;
+    });
+    const updatedTodo: any = {
+      _id: id,
+      name: currentTodo?.name,
+      isComplete: currentTodo?.isComplete,
+    };
+    this.httpClient.put(`${this.apiURL}/edit?todoID=${id}`, updatedTodo).subscribe({
+      next: (data:any) => {
+        this.setState(() => ({
+          todos: this.state.todos.map((todo) => (todo._id === data.todo._id ? data.todo : todo))
+        }))
+      },
+      error: error => {
+        console.log('ERROR: ', error);
+      }
+    })
   }
 }

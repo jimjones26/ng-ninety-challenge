@@ -46,24 +46,22 @@ export class AppComponent implements OnInit {
   updateTodo(id:string) {
     this.todoService.updateTodo(id, this.editTodo.value)
     this.todoService.toggleEditMode();
-    //return this.isEditMode = !this.isEditMode;
   }
 
   toggleEditMode(id: string) {
     this.todoService.toggleEditMode();
-    console.log("TOGGLE: ", this.isEditMode$);
-
-    //this.isEditMode = !this.isEditMode;
     this.itemToEdit = id;
-
     if(this.isEditMode$) {
       let todo = this.todoService.state.todos.find(item => item._id === id);
-
       if(todo !== undefined) {
         this.editTodo.setValue(todo.name)
       } else {
         this.editTodo.setValue('')
       }
     }
+  }
+
+  toggleComplete(id: string) {
+    this.todoService.toggleComplete(id);
   }
 }
