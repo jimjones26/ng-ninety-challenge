@@ -30,6 +30,10 @@ input:read-only {
   row-gap: 0px;
 }
 
+.mat-mdc-list {
+  margin-top: 9px;
+}
+
 .container-div {
   height: 100%;
   display: flex;

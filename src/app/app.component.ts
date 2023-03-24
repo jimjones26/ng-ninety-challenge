@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, shareReplay } from 'rxjs';
 import * as uuid from "uuid";
 
 import { TodoService, Todo } from '../services/todo.service';
@@ -19,7 +19,7 @@ export class AppComponent implements OnInit {
 
   ngOnInit(): void {
     this.todoService.getTodos();
-    this.todos$ = this.todoService.select((state) => state.todos);
+    this.todos$ = this.todoService.select((state) => state.todos).pipe(shareReplay());
     this.isEditMode$ = this.todoService.select((state) => state.isEditMode);
   }
 
