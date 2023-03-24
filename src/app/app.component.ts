@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
 
-import { Todo } from "./todo";
+import { Todo } from './todo';
 
-import * as uuid from "uuid";
+import * as uuid from 'uuid';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
 })
 export class AppComponent {
   title = 'Ninety.io Coding Challenge';
@@ -16,15 +16,15 @@ export class AppComponent {
 
   todos: Todo[] = [
     {
-      id: '1',
-      name: "Test Todo",
+      id: uuid.v4(),
+      name: 'Test Todo',
       isComplete: false,
     },
     {
-      id: '2',
-      name: "Test Todo 2",
+      id: uuid.v4(),
+      name: 'Test Todo 2',
       isComplete: true,
-    }
+    },
   ];
 
   createTodo(todo: string) {
@@ -33,7 +33,7 @@ export class AppComponent {
       id: newId,
       name: todo,
       isComplete: false,
-    }
+    };
 
     this.todos.push(newTodo);
     this.todo = '';
@@ -42,6 +42,6 @@ export class AppComponent {
   deleteTodo(id: string) {
     let newArray = this.todos.filter((todo: Todo) => todo.id !== id);
 
-    return this.todos = newArray;
+    return (this.todos = newArray);
   }
 }
